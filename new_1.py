@@ -7,28 +7,31 @@ from sklearn.linear_model import LinearRegression
 st.set_page_config(layout="wide")
 
 # Custom CSS to reduce sidebar width
-st.markdown("""
-<style>
-    /* Adjust the sidebar width */
-    .css-1d391kg {width: 20% !important;}
-    .css-1d391kg .sidebar-content {
-        width: 100% !important;
-    }
-    .css-1d391kg .sidebar .sidebar-header {
-        padding-top: 20px;
-    }
+st.markdown(
+    """
+    <style>
+        /* Adjust the sidebar width */
+        .css-1d391kg {width: 20% !important;}
+        .css-1d391kg .sidebar-content {
+            width: 100% !important;
+        }
+        .css-1d391kg .sidebar .sidebar-header {
+            padding-top: 20px;
+        }
 
-    /* Set the background color of the Streamlit app */
-    .main {
-        background-color: #f0f0f0 !important;  /* Light Gray */
-    }
+        /* Set the background color of the Streamlit app */
+        .main {
+            background-color: #001f3d !important;  /* Navy Blue */
+        }
 
-    /* Optional: Set background color for sidebar */
-    .css-1d391kg {
-        background-color: #ffffff !important;  /* White */
-    }
-</style>
-""", unsafe_allow_html=True)
+        /* Optional: Set background color for sidebar */
+        .css-1d391kg {
+            background-color: #001f3d !important;  /* Navy Blue */
+        }
+    </style>
+    """, 
+    unsafe_allow_html=True
+)
 
 
 # Load data from the Excel file
@@ -43,7 +46,11 @@ st.sidebar.header('Average Fare Pax Trends')
 FROM_CITY = st.sidebar.selectbox('Select From City:', from_city_options)
 TO_CITY = st.sidebar.selectbox('Select To City:', df[df['FROM_CITY'] == FROM_CITY]['TO_CITY'].unique())
 Month = st.sidebar.selectbox('Select Month:', month_options)
-
+st.sidebar.header('Region Wise Metrics')
+MonthM_LY = st.sidebar.selectbox('Select Month - LY:', monthm_ly_options)
+year_type = st.sidebar.selectbox("Select Year Type", ["LY", "TY"])
+snap_date_name = st.sidebar.selectbox("Select Snap Date", ['29-Dec', '22-Dec', '15-Dec', '08-Dec', '01-Dec', '24-Nov', '17-Nov', '10-Nov', '03-Nov'])
+month = st.sidebar.selectbox("Select Month -TY", df['Month'].unique())
 
 # Function for Avg Fare Graphs and Table
 # Function for Avg Fare Graphs and Table with Bollinger Bands
@@ -308,12 +315,6 @@ if st.sidebar.button('Generate: Average Fare, and Pax Trends'):
         
     except Exception as e:
         st.error(f"Error while generating insights: {e}")
-
-st.sidebar.header('Region Wise Metrics')
-MonthM_LY = st.sidebar.selectbox('Select Month - LY:', monthm_ly_options)
-year_type = st.sidebar.selectbox("Select Year Type", ["LY", "TY"])
-snap_date_name = st.sidebar.selectbox("Select Snap Date", ['29-Dec', '22-Dec', '15-Dec', '08-Dec', '01-Dec', '24-Nov', '17-Nov', '10-Nov', '03-Nov'])
-month = st.sidebar.selectbox("Select Month -TY", df['Month'].unique())
 
 def pax_table_monthly(MonthM_LY):
     # Filter the dataframe by MonthM_LY
