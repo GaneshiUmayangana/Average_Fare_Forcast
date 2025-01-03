@@ -33,7 +33,6 @@ st.markdown("""
 
 # Load data from the Excel file
 df = pd.read_excel('AVG FARE As at 29Dec Snap.xlsx', sheet_name='AVG_FARE', header=3)
-
 # Dropdown options
 from_city_options = df['FROM_CITY'].unique()
 month_options = df['Month'].unique()
@@ -308,7 +307,7 @@ if st.sidebar.button('Generate: Average Fare, and Pax Trends'):
         pax(FROM_CITY, TO_CITY, Month)       # Generate Pax Graphs and Table
         
     except Exception as e:
-            st.error(f"Error while generating insights: {e}")
+        st.error(f"Error while generating insights: {e}")
 
 st.sidebar.header('Region Wise Metrics')
 MonthM_LY = st.sidebar.selectbox('Select Month - LY:', monthm_ly_options)
